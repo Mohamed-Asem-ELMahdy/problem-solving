@@ -1,0 +1,76 @@
+/*
+ link   : https://vjudge.net/problem/UVA-10452
+ author : Mohamed Asem
+*/
+#include <bits/stdc++.h>
+#define test ll te;cin>>te;while(te--)
+#define all(x) x.begin(),x.end()
+#define rall(x) x.rbegin(),x.rend()
+#define vi vector<ll>
+typedef long long ll;
+const ll oo = 1e9,N = 1e5+ 3, MOD = 1e9 + 7;
+using namespace std;
+char g[20][20];
+bool vis[20][20];
+int n,m;
+/*
+int dx[]={1,1,0,-1,-1,-1,0,1}; // 8 dir
+int dy[]={0,1,1,1,0,-1,-1,-1};
+*/
+
+int dx[]={0,-1,0};  // 3 dir
+int dy[]={-1,0,1};
+
+string s="IEHOVA#";
+vector<string> v,vv;
+int pointer=0;
+void dfs(int x,int y,int po)
+{
+    for(int i=0;i<3;i++)
+    {
+        int nx=dx[i]+x,ny=y+dy[i];
+        if(nx>=0&&nx<n&&ny<m&&ny>=0&&g[nx][ny]==s[po])
+        {
+            //cout<<g[nx][ny];
+            if(i==0)cout<<"left";
+            if(i==1)cout<<"forth";
+            else if(i==2) cout<<"right";
+            if(g[nx][ny]!='#')cout<<' ';
+
+            dfs(nx,ny,po+1);
+            break;
+        }
+    }
+}
+
+void solve()
+{
+    v=vv;
+    cin>>n>>m;
+    int sr,sc;
+
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<m;j++)
+        {
+            cin>>g[i][j];
+            if(g[i][j]=='@')
+            {
+                sr=i,sc=j;
+            }
+        }
+    }
+    dfs(sr,sc,pointer);
+}
+
+signed main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+
+    test
+    {
+        solve();
+        cout<<endl;
+    }
+}
