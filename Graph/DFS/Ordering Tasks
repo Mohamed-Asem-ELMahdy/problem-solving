@@ -1,0 +1,63 @@
+/*
+ link   : https://vjudge.net/problem/UVA-10305
+ author : Mohamed Asem
+*/
+#include <bits/stdc++.h>
+using namespace std;
+/////////////////Problem//////////////////////
+int n,m;
+vector<vector<int>> arr;
+vector<bool> vis;
+vector<int>ans,a;
+
+void topological_sort(int node)
+{
+    vis[node]=1;
+    for(auto x:arr[node])
+    {
+        if(!vis[x])topological_sort(x);
+    }
+    ans.push_back(node);
+}
+
+
+void solve()
+{
+
+    while(m--)
+    {
+        int x,y;
+        cin>>x>>y;
+        arr[x].push_back(y);
+    }
+
+    for(int i=1;i<=n;i++)
+        if(!vis[i])
+            topological_sort(i);
+    for(int i=n-1;i>=0;i--)
+    {
+        cout<<ans[i];
+        if(i)
+            cout<<' ';
+    }
+    cout << '\n';
+}
+
+signed main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+
+    while(cin>>n>>m,n!=0||m!=0)
+    {
+        vis.clear();
+        vis.assign(n+1,0);
+        ans.clear();
+        arr.clear();
+        arr.resize(n+1);
+
+        solve();
+        cout<<endl;
+    }
+
+}
