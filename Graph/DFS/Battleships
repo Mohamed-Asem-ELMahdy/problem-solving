@@ -1,0 +1,79 @@
+/*
+ link   : https://vjudge.net/contest/372877#problem/C
+ author : Mohamed Asem
+*/
+#include <bits/stdc++.h>
+#define test ll te;cin>>te;while(te--)
+
+/*
+int dx[]={1,1,0,-1,-1,-1,0,1}; // 8 dir
+int dy[]={0,1,1,1,0,-1,-1,-1};
+*/
+
+int dx[]={1,0,-1,0};  // 4 dir
+int dy[]={0,-1,0,1};
+using namespace std;
+/////////////////Problem//////////////////////
+int n,m;
+int tst;
+int cnt=0;
+char arr[105][105];
+int vis[105][105];
+void dfs(int i,int j)
+{
+    if(arr[i][j]=='.')
+        return ;
+    if(i>=n || j<0 || j>=n || i<0)
+        return ;
+    arr[i][j]='.';
+    int x,y;
+    for(int a=0;a<4;a++)
+    {
+        x=i+dx[a];y=j+dy[a];
+        dfs(x,y);
+    }
+}
+
+void solve()
+{
+    cin>>n;
+    int c=0;
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            cin>>arr[i][j];
+        }
+    }
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            if(arr[i][j]=='X' || arr[i][j]=='x')
+            {
+                dfs(i,j);
+                c++;
+            }
+        }
+    }
+    cout<<"Case "<<++cnt<<": "<<c<<endl;
+}
+
+signed main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+
+    cin>>tst;
+    while(tst--)
+    {
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                arr[i][j]='.';
+            }
+        }
+        solve();
+    }
+}
