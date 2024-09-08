@@ -1,0 +1,64 @@
+/*
+ link   : https://www.spoj.com/problems/MAKETREE/en/
+ author : Mohamed Asem
+*/
+#include <bits/stdc++.h>
+using namespace std;
+/////////////////Problem//////////////////////
+int n,k;
+vector<int> arr[100009];
+bool vis[100009];
+int boss[100009];
+vector<int>ans;
+
+void topological_sort(int node)
+{
+    vis[node]=1;
+    for(auto x:arr[node])
+    {
+        if(!vis[x])topological_sort(x);
+    }
+    ans.push_back(node);
+}
+
+
+void solve()
+{
+    cin>>n>>k;
+    for(int i=1;i<=k;i++) {
+        int fr;
+        cin >> fr;
+        while (fr--) {
+            int x;
+            cin >> x;
+            arr[i].push_back(x);
+
+        }
+    }
+    for(int i=1;i<=n;i++)
+    {
+        if(!vis[i])
+            topological_sort(i);
+    }
+
+    reverse(ans.begin(),ans.end());
+    int p=0;
+
+    for(auto x : ans)
+    {
+        boss[x]=p;
+        p=x;
+    }
+    for(int i=1;i<=n;i++)
+        cout<<boss[i]<<'\n';
+
+}
+
+signed main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+
+    solve();
+
+}
