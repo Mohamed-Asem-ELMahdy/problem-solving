@@ -1,0 +1,32 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+const int N = 1e5 + 4;
+bool vis[N];
+vector<int> arr[N];
+vector<int> topo_order;
+int nodes, edges;
+
+void dfs(int src) {
+    vis[src] = 1;
+    for (auto child: arr[src]) {
+        if (!vis[child])
+            dfs(child);
+    }
+    topo_order.push_back(src);
+}
+
+int main() {
+    cin >> nodes >> edges;
+    for (int i = 0; i < nodes; i++) {
+        int from, to;
+        cin >> from >> to;
+        arr[from].push_back(to);
+        arr[to].push_back(from);
+    }
+    dfs(1);
+    for (auto x: topo_order)
+        cout << x << endl;
+    return 0;
+}
