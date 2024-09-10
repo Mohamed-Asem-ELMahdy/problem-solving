@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+const int N = 1e3 + 4;
+int vis[N];
+int parent[N];
+vector<int> arr[N];
+int nodes, edges;
+bool has_cycle = 0;
+
+void dfs(int src) {
+    vis[src] = 2;
+
+    for (auto child: arr[src]) {
+        if (vis[child] == 0)
+            parent[child] = src,dfs(child);
+        else if (vis[child] == 2 && parent[src] != child)
+            has_cycle = 1;
+    }
+}
+
+
+int main() {
+    cin >> nodes >> edges;
+    for (int i = 0; i < edges; i++) {
+        int from, to;
+        cin >> from >> to;
+        arr[from].push_back(to);
+        arr[to].push_back(from);
+    }
+    dfs(1);
+    cout << has_cycle << endl;
+    return 0;
+}
