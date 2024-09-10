@@ -1,0 +1,43 @@
+#include <iostream>
+#include <bits/stdc++.h>
+
+using namespace std;
+const int N = 1e3 + 4, OO = 0x3f3f3f3f;
+int dis[N];
+vector<int> arr[N];
+int nodes, edges;
+
+void BFS(int src) {
+    dis[src] = 0;
+    queue<int> q;
+    q.push(src);
+
+    while (!q.empty()) {
+        int parent = q.front();
+        q.pop();
+        for (auto child: arr[parent]) {
+            if (dis[child]==OO)
+            {
+                dis[child]=dis[parent]+1;
+                q.push(child);
+            }
+        }
+    }
+}
+
+int main() {
+    memset(dis, OO, sizeof dis);
+    cin >> nodes >> edges;
+    for (int i = 0; i < edges; i++) {
+        int from, to;
+        cin >> from >> to;
+        arr[from].push_back(to);
+        arr[to].push_back(from);
+    }
+
+    BFS(1);
+    cout<<"The sourse is 1 ."<<endl;
+    for(int i=1;i<=nodes;i++)
+        cout<<"distance from : "<<i<<" to source : "<<dis[i]<<endl;
+    return 0;
+}
